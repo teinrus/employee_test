@@ -1,0 +1,14 @@
+{% extends 'testing/base.html' %}
+
+{% block title %}Выбор направления{% endblock %}
+
+{% block content %}
+    <h2 class="text-center">Выберите направление</h2>
+    <ul class="list-group">
+        {% for direction in directions %}
+            <li class="list-group-item">
+                <a href="{% url 'test_view' direction.id %}" class="btn btn-primary w-100">{{ direction.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'testing/base.html' %}
+
+{% block title %}Введите фамилию{% endblock %}
+
+{% block content %}
+    <h2 class="text-center">Введите фамилию</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" name="surname" class="form-control" placeholder="Введите фамилию" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Отправить</button>
+    </form>
+{% endblock %}

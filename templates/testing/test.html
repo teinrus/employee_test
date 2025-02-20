@@ -1,0 +1,56 @@
+{% extends 'testing/base.html' %}
+
+{% block title %}Тест{% endblock %}
+
+{% block content %}
+<style>
+    .theme-block {
+        background-color: #f8f9fa; /* Светло-серый фон */
+        border-left: 5px solid #CB272B; /* Красная линия слева */
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .question-block {
+        margin-bottom: 15px; /* Увеличиваем расстояние между вопросами */
+        padding: 10px;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .theme-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #103D6E; /* Тёмно-синий */
+        margin-bottom: 10px;
+    }
+</style>
+
+<form method="POST">
+    {% csrf_token %}
+
+    {% for theme, questions in questions_by_theme.items %}
+        <div class="theme-block">
+            <h3 class="theme-title">{{ theme.name }}</h3>
+
+            {% for question in questions %}
+                <div class="question-block">
+                    <p><strong>{{ question.text }}</strong></p>
+                    {% for answer in question.answers.all %}
+                        <label>
+                            <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                            {{ answer.text }}
+                        </label><br>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary mt-3">Отправить</button>
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Тестирование сотрудников{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% load static %}
+
+    <style>
+        /* Фирменные цвета */
+        :root {
+            --primary-red: #CB272B; /* Основной красный */
+            --secondary-red: #E31E24; /* Дополнительный красный */
+            --dark-blue: #103D6E; /* Темно-синий */
+            --black: #2B2A29; /* Чёрный */
+            --light-gray: #C5CCD4; /* Светло-серый */
+        }
+
+        body {
+            background-color: var(--light-gray);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            margin-top: 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .wrong-answer {
+            color: red;
+            font-weight: bold;
+        }
+        .navbar {
+            background-color: var(--dark-blue);
+            padding: 10px;
+        }
+.navbar-brand {
+    color: #CB272B !important; /* Красный по умолчанию */
+    font-weight: bold;
+    transition: color 0.3s ease-in-out; /* Плавный эффект */
+}
+.navbar-brand:hover {
+    color: #103D6E !important; /* Тёмно-синий при наведении */
+}
+
+
+        .navbar-logo {
+            height: 40px; /* Высота логотипа */
+            margin-right: 10px;
+        }
+        .btn-primary {
+            background-color: var(--primary-red);
+            border-color: var(--primary-red);
+        }
+        .btn-primary:hover {
+            background-color: var(--secondary-red);
+            border-color: var(--secondary-red);
+        }
+        .btn-outline-primary {
+            color: var(--dark-blue);
+            border-color: var(--dark-blue);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--dark-blue);
+            color: white;
+        }
+        .table thead {
+            background-color: var(--primary-red);
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: var(--dark-blue);
+            color: white;
+            margin-top: 30px;
+            border-radius: 0 0 10px 10px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'select_direction' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Логотип" class="navbar-logo">
+            Тестирование сотрудников
+        </a>
+    </div>
+</nav>
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<div class="footer">
+    <p>&copy; 2025 Тестирование сотрудников | Все права защищены</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

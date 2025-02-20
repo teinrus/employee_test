@@ -1,0 +1,23 @@
+# Игнорируем файлы окружения
+venv/
+*.pyc
+*.pyo
+__pycache__/
+
+
+# Игнорируем файлы конфигурации IDE
+.idea/
+.vscode/
+*.iml
+
+# Логи и временные файлы
+logs/
+*.log
+*.swp
+.DS_Store
+
+# Кэш браузера и статики
+staticfiles/
+media/
+node_modules/
+.env

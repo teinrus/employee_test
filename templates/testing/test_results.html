@@ -1,0 +1,83 @@
+{% extends 'testing/base.html' %}
+{% load custom_filters %}
+
+{% block title %}Результаты теста{% endblock %}
+
+{% block content %}
+    <h2 class="text-center">Результаты теста</h2>
+
+    <p><strong>Фамилия:</strong> {{ result.surname }}</p>
+    <p><strong>Направление:</strong> {{ result.direction.name }}</p>
+    <p><strong>Правильных ответов:</strong> {{ result.correct_answers }} из {{ result.total_questions }}</p>
+
+    <hr>
+
+    <h3>Подробные результаты:</h3>
+
+    <style>
+        .theme-block {
+            background-color: #f8f9fa; /* Светло-серый фон */
+            border-left: 5px solid #CB272B; /* Красная линия слева */
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .question-block {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .theme-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #103D6E; /* Тёмно-синий */
+            margin-bottom: 10px;
+        }
+    </style>
+
+    {% for theme, questions in questions_by_theme.items %}
+        <div class="theme-block">
+            <h3 class="theme-title">{{ theme.name }}</h3>
+
+            {% for question in questions %}
+                <div class="question-block">
+                    <p><strong>Вопрос:</strong> {{ question.text }}</p>
+                    <ul class="list-group">
+                        {% with selected_answer=user_answers|get_item:question.id %}
+                            {% for answer in question.answers.all %}
+                                {% if selected_answer is not None %}
+                                    {% if answer.id == selected_answer %}
+                                        {% if answer.is_correct %}
+                                            <li class="list-group-item text-success fw-bold">
+                                                ✅ <strong>Ваш ответ (правильный):</strong> {{ answer.text }}
+                                            </li>
+                                        {% else %}
+                                            <li class="list-group-item text-danger fw-bold">
+                                                ❌ <strong>Ваш ответ (неправильный):</strong> {{ answer.text }}
+                                            </li>
+                                        {% endif %}
+                                    {% elif answer.is_correct %}
+                                        <li class="list-group-item text-success fw-bold">
+                                            ✅ <strong>Правильный ответ:</strong> {{ answer.text }}
+                                        </li>
+                                    {% else %}
+                                        <li class="list-group-item">{{ answer.text }}</li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endwith %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <a href="{% url 'pdf_results' result.id %}" class="btn btn-danger mt-3">
+        📄 Сохранить в PDF
+    </a>
+
+{% endblock %}
