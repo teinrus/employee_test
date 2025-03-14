@@ -14,6 +14,7 @@ from .models import TestResult, Question, Answer
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Direction, Question, Answer, Theme
 from .forms import TestForm
+from datetime import datetime
 
 def select_direction(request):
     directions = Direction.objects.all()
@@ -135,8 +136,14 @@ def pdf_results(request, result_id):
     pdfmetrics.registerFont(TTFont('DejaVu', font_path))
 
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="Результат_{result.surname}.pdf"'
 
+    today = datetime.today().strftime('%Y-%m-%d')
+    filename = f"{result.direction.name}_{result.surname}_{today}.pdf"
+
+    # Указываем, что файл нужно скачать с заданным именем
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    
+    
     # Создаём PDF-документ
     doc = SimpleDocTemplate(response, pagesize=A4)
     elements = []
